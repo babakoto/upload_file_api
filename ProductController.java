@@ -24,6 +24,11 @@ public class ProductController {
         return null;
     }
 
+    // <<dir.images>> in application.properties
+    /*
+    dir.images = ${user.home}\\uploads
+    */
+    
     @Value("${dir.images}")
     private String uploadDir;
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -31,6 +36,15 @@ public class ProductController {
 
         Date date = new Date();
         long time = date.getTime();
+        
+        /* File.getFileExtension need 
+         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>24.1.1-jre</version>
+        </dependency>
+        */
+       
         File convertFile = new File(uploadDir+"\\"+time+"."+Files.getFileExtension(file.getOriginalFilename()));
         FileOutputStream fileOutputStream = new FileOutputStream(convertFile);
 
